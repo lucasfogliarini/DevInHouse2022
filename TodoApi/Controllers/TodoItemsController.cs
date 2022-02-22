@@ -4,11 +4,9 @@ using TodoApi.Models;
 
 namespace TodoApi.Controllers
 {
-    #region snippet_Route
     [Route("api/[controller]")]
     [ApiController]
     public class TodoItemsController : ControllerBase
-    #endregion
     {
         private readonly TodoContext _context;
 
@@ -25,7 +23,6 @@ namespace TodoApi.Controllers
         }
 
         // GET: api/TodoItems/5
-        #region snippet_GetByID
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
@@ -38,11 +35,9 @@ namespace TodoApi.Controllers
 
             return todoItem;
         }
-        #endregion
 
         // PUT: api/TodoItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        #region snippet_Update
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
@@ -71,11 +66,9 @@ namespace TodoApi.Controllers
 
             return NoContent();
         }
-        #endregion
 
         // POST: api/TodoItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        #region snippet_Create
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
         {
@@ -85,10 +78,8 @@ namespace TodoApi.Controllers
             //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
         }
-        #endregion
 
         // DELETE: api/TodoItems/5
-        #region snippet_Delete
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
@@ -103,7 +94,6 @@ namespace TodoApi.Controllers
 
             return NoContent();
         }
-        #endregion
 
         private bool TodoItemExists(long id)
         {
