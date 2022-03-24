@@ -29,7 +29,7 @@
       - [Google Calendar API Client Library for .NET](https://developers.google.com/api-client-library/dotnet/apis/calendar/v3), [nuget package](https://www.nuget.org/packages/Google.Apis.Calendar.v3)      
 
   2. Consumindo com ferramentas 
-      - [Postman](hhttps://www.postman.com/company/about-postman/)
+      - [Postman](https://www.postman.com/company/about-postman/)
          - Postman é uma plataforma para construir e usar APIs. O Postman simplifica cada etapa do ciclo de vida da API e agiliza a colaboração para que você possa criar APIs melhores e mais rapidamente.
       - [Swagger](https://swagger.io/)
          - Swagger é uma linguagem de descrição de interface para descrever APIs RESTful expressas usando JSON.
