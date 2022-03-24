@@ -25,7 +25,9 @@
   2. [Swagger](https://swagger.io/)
   3. API Wrapper, o que é?  
       Um API Wrapper simplifica o processo de interação com a API, ele fornece uma maneira de acessar uma API por meio de uma linguagem ou interface de programação específica.
-      - [SpotifyApi.NetCore Wrapper](https://github.com/Ringobot/SpotifyApi.NetCore) vs [HttpClient](https://docs.microsoft.com/pt-br/dotnet/api/system.net.http.httpclient?view=net-6.0#examples)
+      - [SpotifyApi.NetCore Wrapper](https://github.com/Ringobot/SpotifyApi.NetCore), [nuget package](https://www.nuget.org/packages/SpotifyApi.NetCore/)
+      - [Google Calendar API Client Library for .NET](https://developers.google.com/api-client-library/dotnet/apis/calendar/v3), [nuget package](https://www.nuget.org/packages/Google.Apis.Calendar.v3)
+      - [HttpClient](https://docs.microsoft.com/pt-br/dotnet/api/system.net.http.httpclient?view=net-6.0#examples)
 
 ### 6. [Tutorial: Criar uma API Web mínima com ASP.NET Core](https://docs.microsoft.com/pt-br/aspnet/core/tutorials/min-web-api?view=aspnetcore-6.0&tabs=visual-studio)
 
