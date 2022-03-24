@@ -24,9 +24,9 @@
   
   1. Consumindo programaticamente com **API Wrapper** ou **API Client**. Mas o que é isso?  
      Um algoritmo que simplifica o processo de interação com a API, ele fornece uma maneira de acessar uma API por meio de uma linguagem ou interface de programação específica.
-      - [SpotifyApi.NetCore Wrapper](https://github.com/Ringobot/SpotifyApi.NetCore), [nuget package](https://www.nuget.org/packages/SpotifyApi.NetCore/)
-      - [Google Calendar API Client Library for .NET](https://developers.google.com/api-client-library/dotnet/apis/calendar/v3), [nuget package](https://www.nuget.org/packages/Google.Apis.Calendar.v3)
       - [HttpClient](https://docs.microsoft.com/pt-br/dotnet/api/system.net.http.httpclient?view=net-6.0#examples)
+      - [SpotifyApi.NetCore Wrapper](https://github.com/Ringobot/SpotifyApi.NetCore), [nuget package](https://www.nuget.org/packages/SpotifyApi.NetCore/)
+      - [Google Calendar API Client Library for .NET](https://developers.google.com/api-client-library/dotnet/apis/calendar/v3), [nuget package](https://www.nuget.org/packages/Google.Apis.Calendar.v3)      
 
   2. Consumindo com Ferramentas 
       - [Postman](https://www.postman.com/)
