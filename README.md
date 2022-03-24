@@ -30,4 +30,11 @@
 ### 6. [Tutorial: Criar uma API Web mínima com ASP.NET Core](https://docs.microsoft.com/pt-br/aspnet/core/tutorials/min-web-api?view=aspnetcore-6.0&tabs=visual-studio)
 
 ### 7. Alguma dúvida?
-Entre em contato comigo por e-mail lucasfogliarini@gmail.com.
+Entre em contato com a gente...  
+##### Lucas Fogliarini
+ - E-mail: lucasfogliarini@gmail.com 
+ - Github: [lucasfogliarini](https://github.com/lucasfogliarini)  
+
+##### Luis Maruccio
+ - E-mail: luis.maruccio@gmail.com 
+ - Github: [luismaruccio](https://github.com/luismaruccio)   
