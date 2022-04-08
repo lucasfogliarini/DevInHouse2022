@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using TodoApi.Models;
 
 namespace TodoApi.Controllers
@@ -30,7 +31,7 @@ namespace TodoApi.Controllers
 
             if (todoItem == null)
             {
-                return NotFound();
+                throw new ValidationException("TodoItem não encontrado.");
             }
 
             return todoItem;
@@ -41,11 +42,6 @@ namespace TodoApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
-            if (id != todoItem.Id)
-            {
-                return BadRequest();
-            }
-
             _context.Entry(todoItem).State = EntityState.Modified;
 
             try
@@ -56,7 +52,7 @@ namespace TodoApi.Controllers
             {
                 if (!TodoItemExists(id))
                 {
-                    return NotFound();
+                    throw new ValidationException("TodoItem não existe.");
                 }
                 else
                 {
@@ -83,10 +79,12 @@ namespace TodoApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem(long id)
         {
+            throw new Exception("Ocorreu um erro na aplicação.");//Apenas para testar o ProblemDetails
+
             var todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
             {
-                return NotFound();
+                throw new ValidationException("TodoItem não encontrado.");
             }
 
             _context.TodoItems.Remove(todoItem);

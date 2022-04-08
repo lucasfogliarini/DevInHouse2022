@@ -1,4 +1,6 @@
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using TodoApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,17 @@ builder.Services.AddDbContext<TodoContext>(opt =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+builder.Services.AddProblemDetails(x =>
+{
+    x.MapToStatusCode<ValidationException>(StatusCodes.Status400BadRequest);
+    x.IncludeExceptionDetails = (ctx, ex) =>
+    {
+        return true;
+    };
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -20,6 +33,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseProblemDetails();
 
 app.UseHttpsRedirection();
 
