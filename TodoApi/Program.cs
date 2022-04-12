@@ -1,6 +1,6 @@
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+using FluentValidation;
 using TodoApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

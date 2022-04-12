@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using TodoApi.Models;
@@ -31,7 +32,10 @@ namespace TodoApi.Controllers
 
             if (todoItem == null)
             {
-                throw new ValidationException("TodoItem não encontrado.");
+                var errors = new List<ValidationFailure>();
+                errors.Add(new ValidationFailure("prop1", "error1"));
+
+                throw new FluentValidation.ValidationException("TodoItem não encontrado.", errors);
             }
 
             return todoItem;
