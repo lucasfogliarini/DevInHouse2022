@@ -2,33 +2,47 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
-using TodoApi.Models;
+using TodoApi.Entities;
 
 namespace TodoApi.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    [Route("[controller]")]
+    public class TodoItemsController : ODataController<TodoItem>
     {
-        private readonly TodoContext _context;
-
-        public TodoItemsController(TodoContext context)
+        public TodoItemsController(TodoContext context) : base(context)
         {
-            _context = context;
         }
 
+        //overrides GetOData
         // GET: api/TodoItems
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
+        //[HttpGet]
+        private IQueryable GetTodoItems(int skip, int take, string orderByColumn, bool asc)
         {
-            return await _context.TodoItems.ToListAsync();
+            var todoItems = DbSet
+                .Where(e => e.IsComplete)
+                .Skip(skip)
+                .Take(take);
+
+            if(orderByColumn != null)
+            {
+                todoItems = asc ? todoItems.OrderBy(e => orderByColumn) : todoItems.OrderByDescending(e => orderByColumn);
+            }
+
+            todoItems.Select(e => new
+                {
+                    e.Name,
+                    e.IsComplete,
+                    e.Creation
+                });
+            return todoItems;
         }
 
         // GET: api/TodoItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(long id)
         {
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = await DbSet.FindAsync(id);
 
             if (todoItem == null)
             {
@@ -46,11 +60,12 @@ namespace TodoApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(long id, TodoItem todoItem)
         {
-            _context.Entry(todoItem).State = EntityState.Modified;
+            todoItem.Id = id;
+            TodoContext.Update(todoItem);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await TodoContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -72,8 +87,8 @@ namespace TodoApi.Controllers
         [HttpPost]
         public async Task<ActionResult<TodoItem>> PostTodoItem(TodoItem todoItem)
         {
-            _context.TodoItems.Add(todoItem);
-            await _context.SaveChangesAsync();
+            DbSet.Add(todoItem);
+            await TodoContext.SaveChangesAsync();
 
             //return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
             return CreatedAtAction(nameof(GetTodoItem), new { id = todoItem.Id }, todoItem);
@@ -85,21 +100,21 @@ namespace TodoApi.Controllers
         {
             throw new Exception("Ocorreu um erro na aplicação.");//Apenas para testar o ProblemDetails
 
-            var todoItem = await _context.TodoItems.FindAsync(id);
+            var todoItem = await DbSet.FindAsync(id);
             if (todoItem == null)
             {
                 throw new ValidationException("TodoItem não encontrado.");
             }
 
-            _context.TodoItems.Remove(todoItem);
-            await _context.SaveChangesAsync();
+            DbSet.Remove(todoItem);
+            await TodoContext.SaveChangesAsync();
 
             return NoContent();
         }
 
         private bool TodoItemExists(long id)
         {
-            return _context.TodoItems.Any(e => e.Id == id);
+            return DbSet.Any(e => e.Id == id);
         }
     }
 }
