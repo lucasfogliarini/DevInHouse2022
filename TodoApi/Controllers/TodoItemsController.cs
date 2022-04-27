@@ -24,17 +24,17 @@ namespace TodoApi.Controllers
                 .Skip(skip)
                 .Take(take);
 
-            if(orderByColumn != null)
+            if (orderByColumn != null)
             {
                 todoItems = asc ? todoItems.OrderBy(e => orderByColumn) : todoItems.OrderByDescending(e => orderByColumn);
             }
 
             todoItems.Select(e => new
-                {
-                    e.Name,
-                    e.IsComplete,
-                    e.Creation
-                });
+            {
+                e.Name,
+                e.IsComplete,
+                e.Creation
+            });
             return todoItems;
         }
 

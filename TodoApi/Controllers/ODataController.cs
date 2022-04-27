@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.OData.Query;
 using TodoApi.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
 
 namespace TodoApi.Controllers
 {
@@ -18,11 +17,9 @@ namespace TodoApi.Controllers
         }
 
         [EnableQuery]
-        public IActionResult GetOData()
+        public IEnumerable<TEntity> Get()//Deve ser Get usando EdmModel 
         {
-            //deve ser IActionResult para funcionar o $count=true
-            var query = DbSet.AsQueryable();
-            return Ok(query);
+            return DbSet;
         }
     }
 }

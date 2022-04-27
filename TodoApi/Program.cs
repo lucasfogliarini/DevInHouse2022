@@ -5,7 +5,6 @@ using TodoApi.Entities;
 using Microsoft.AspNetCore.OData;
 using Microsoft.OData.Edm;
 using Microsoft.OData.ModelBuilder;
-using TodoApi.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigureServices(builder);
@@ -18,10 +17,19 @@ static void ConfigureServices(WebApplicationBuilder builder)
         .AddControllers()
         .AddOData(opt =>
         {
-            opt.EnableQueryFeatures(50);//.Select().OrderBy().Filter().Expand().SetMaxTop(50).Count()
+            //uso simples
+            opt.EnableQueryFeatures(50);
+            //o mesmo que: opt.Select().OrderBy().Filter().Expand().SetMaxTop(50).Count();
 
-            opt.RouteOptions.EnableControllerNameCaseInsensitive = true;//desabilita o case sensitive do entityset            
-            opt.AddRouteComponents("odata", GetEdmModel());//necessário apenas para usar o $count=true
+            //uso avançado:
+            //- Contagem (count=true)
+            //- Computação (compute=Price mul Quantity)
+            //- Prefixo da rota ("odata")
+            //- Customizações do EntitySet
+            IEdmModel edmModel = GetEdmModel();
+            opt.AddRouteComponents("odata", edmModel);
+            //opt.AddRouteComponentsODataControllers();
+            opt.RouteOptions.EnableControllerNameCaseInsensitive = true;//desabilita o case sensitive do entityset
         });
 
     builder.Services.AddDbContext<TodoContext>(opt =>
@@ -43,11 +51,9 @@ static void ConfigureServices(WebApplicationBuilder builder)
 static IEdmModel GetEdmModel()
 {
     var builder = new ODataConventionModelBuilder();
-    //builder.EnableLowerCamelCase();
-    //deve ter o prefixo do nome da controller.
-    //para 'TodoItemsContoller':
-    //pode ser 'todoitems' se EnableControllerNameCaseInsensitive for true
-    //deve ser 'TodoItems' se EnableControllerNameCaseInsensitive for false (padrão)
+    //EntitySet name deve ter o prefixo do nome da controller, para 'TodoItemsContoller':
+    //- pode ser 'todoitems' se EnableControllerNameCaseInsensitive for true
+    //- deve ser 'TodoItems' se EnableControllerNameCaseInsensitive for false (padrão)
     builder.EntitySet<TodoItem>("todoitems");
     return builder.GetEdmModel();
 }
@@ -85,7 +91,7 @@ static void Seed(WebApplication app)
             IsComplete = Convert.ToBoolean(Random.Shared.Next(0, 2)),
             Creation = DateTime.Now,
             Price = Random.Shared.Next(50),
-            Quantity = Random.Shared.Next(2)
+            Quantity = Random.Shared.Next(1,5)
         };
         todoContext.Add(todoItem);
     }
